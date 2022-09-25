@@ -1,1 +1,1 @@
-# gql-gq
+# gql-go
