@@ -10,22 +10,29 @@ import (
 	"gql-go/graph/model"
 )
 
-// CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	return &model.Todo{
-		ID:   "1",
-		Text: input.Text,
-		Done: false,
-		User: &model.User{
-			ID:   input.UserID,
-			Name: "UserName",
-		},
-	}, nil
+// CreateBook is the resolver for the CreateBook field.
+func (r *mutationResolver) CreateBook(ctx context.Context, input model.BookInput) (*model.Book, error) {
+	panic(fmt.Errorf("not implemented: CreateBook - CreateBook"))
 }
 
-// Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+// DeleteBook is the resolver for the DeleteBook field.
+func (r *mutationResolver) DeleteBook(ctx context.Context, id int) (string, error) {
+	panic(fmt.Errorf("not implemented: DeleteBook - DeleteBook"))
+}
+
+// UpdateBook is the resolver for the UpdateBook field.
+func (r *mutationResolver) UpdateBook(ctx context.Context, id int) (string, error) {
+	panic(fmt.Errorf("not implemented: UpdateBook - UpdateBook"))
+}
+
+// GetAllBooks is the resolver for the GetAllBooks field.
+func (r *queryResolver) GetAllBooks(ctx context.Context) ([]*model.Book, error) {
+	panic(fmt.Errorf("not implemented: GetAllBooks - GetAllBooks"))
+}
+
+// GetOneBook is the resolver for the GetOneBook field.
+func (r *queryResolver) GetOneBook(ctx context.Context, id int) (*model.Book, error) {
+	panic(fmt.Errorf("not implemented: GetOneBook - GetOneBook"))
 }
 
 // Mutation returns generated.MutationResolver implementation.
