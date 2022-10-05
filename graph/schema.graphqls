@@ -21,5 +21,5 @@ input BookInput {
 type Mutation {
   CreateBook(input: BookInput!): Book!
   DeleteBook(id: Int!): String!
-  UpdateBook(id: Int!, input: BookInput!): String!
+  UpdateBook(id: Int!, input: BookInput!): Book!
 }

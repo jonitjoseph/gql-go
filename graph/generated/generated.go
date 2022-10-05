@@ -66,7 +66,7 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateBook(ctx context.Context, input model.BookInput) (*model.Book, error)
 	DeleteBook(ctx context.Context, id int) (string, error)
-	UpdateBook(ctx context.Context, id int, input model.BookInput) (string, error)
+	UpdateBook(ctx context.Context, id int, input model.BookInput) (*model.Book, error)
 }
 type QueryResolver interface {
 	GetAllBooks(ctx context.Context) ([]*model.Book, error)
@@ -263,7 +263,7 @@ input BookInput {
 type Mutation {
   CreateBook(input: BookInput!): Book!
   DeleteBook(id: Int!): String!
-  UpdateBook(id: Int!, input: BookInput!): String!
+  UpdateBook(id: Int!, input: BookInput!): Book!
 }
 `, BuiltIn: false},
 }
@@ -717,9 +717,9 @@ func (ec *executionContext) _Mutation_UpdateBook(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*model.Book)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNBook2ᚖgqlᚑgoᚋgraphᚋmodelᚐBook(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_UpdateBook(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -729,7 +729,17 @@ func (ec *executionContext) fieldContext_Mutation_UpdateBook(ctx context.Context
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Book_id(ctx, field)
+			case "title":
+				return ec.fieldContext_Book_title(ctx, field)
+			case "author":
+				return ec.fieldContext_Book_author(ctx, field)
+			case "publisher":
+				return ec.fieldContext_Book_publisher(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Book", field.Name)
 		},
 	}
 	defer func() {

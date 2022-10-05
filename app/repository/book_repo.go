@@ -9,7 +9,7 @@ import (
 
 type BookRepository interface {
 	CreateBook(bookInput *model.BookInput) (*models.Book, error)
-	UpdateBook(bookInput *model.BookInput, id int) error
+	UpdateBook(bookInput *model.BookInput, id int) (*models.Book, error)
 	DeleteBook(id int) error
 	GetOneBook(id int) (*models.Book, error)
 	GetAllBooks() ([]*model.Book, error)
@@ -53,15 +53,15 @@ func (b *BookService) GetOneBook(id int) (*models.Book, error) {
 }
 
 // UpdateBook implements BookRepository
-func (b *BookService) UpdateBook(bookInput *model.BookInput, id int) error {
-	book := models.Book{
+func (b *BookService) UpdateBook(bookInput *model.BookInput, id int) (*models.Book, error) {
+	book := &models.Book{
 		ID:        id,
 		Title:     bookInput.Title,
 		Author:    bookInput.Author,
 		Publisher: bookInput.Publisher,
 	}
 	err := b.Db.Model(&book).Where("id = ?", id).Updates(book).Error
-	return err
+	return book, err
 }
 
 var _ BookRepository = &BookService{}

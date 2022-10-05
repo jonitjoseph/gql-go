@@ -38,15 +38,21 @@ func (r *mutationResolver) DeleteBook(ctx context.Context, id int) (string, erro
 }
 
 // UpdateBook is the resolver for the UpdateBook field.
-func (r *mutationResolver) UpdateBook(ctx context.Context, id int, input model.BookInput) (string, error) {
+func (r *mutationResolver) UpdateBook(ctx context.Context, id int, input model.BookInput) (*model.Book, error) {
 	fmt.Println("UpdateBook")
-	err := r.BookRepository.UpdateBook(&input, id)
-	if err != nil {
-		return "nil", err
+	book, err := r.BookRepository.UpdateBook(&input, id)
+	bookUpdated := &model.Book{
+		Author:    book.Author,
+		Publisher: book.Publisher,
+		Title:     book.Title,
+		ID:        book.ID,
 	}
-	successMessage := "successfully updated"
+	if err != nil {
+		return nil, err
+	}
+	// successMessage := "successfully updated"
 
-	return successMessage, nil
+	return bookUpdated, nil
 }
 
 // GetAllBooks is the resolver for the GetAllBooks field.
